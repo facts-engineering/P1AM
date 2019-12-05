@@ -14,7 +14,7 @@
 	|  0  ||  1  |
 	|  0  ||     |
 	 ¯¯¯¯¯  ¯¯¯¯¯ 
-   	Written by FACTS Engineering
+  Written by FACTS Engineering
 	Copyright (c) 2019 FACTS Engineering, LLC
 	Licensed under the MIT license.
  */
@@ -22,7 +22,7 @@
 
 #include <P1AM.h>
 
-char configData[1] = {0x02, 0x06, 0x02, 0x02};  //passing 0x06 into the config will change that channel to be a GPIO
+char configData[4] = {0x02, 0x06, 0x02, 0x02};  //passing 0x06 into the config will change that channel to be a discrete output
 
 void setup() {  // the setup routine runs once:
   Serial.begin(115200);   //initialize serial communication at 115200 bits per second 
