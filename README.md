@@ -1,4 +1,4 @@
-ProductivityOpen P1AM-100
+ProductivityOpen P1AM-100 [![Build Status](https://travis-ci.org/facts-engineering/P1AM.svg?branch=master)](https://travis-ci.org/facts-engineering/P1AM)
 ============================
 
 The ProductivityOpen P1AM-100 is an automation platform compatible with Productivity 1000 Series I/O modules, P1AM Series shields, and Arduino MKR format shields. It can be programmed using the Arduino IDE.
