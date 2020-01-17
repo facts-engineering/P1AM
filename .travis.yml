@@ -1,0 +1,58 @@
+language: generic
+env:
+  global:
+    - IDE_VERSION=1.8.10
+  matrix:
+    - BOARD="arduino:samd:mkrzero"
+
+before_install:
+  - wget http://downloads.arduino.cc/arduino-$IDE_VERSION-linux64.tar.xz
+  - tar xf arduino-$IDE_VERSION-linux64.tar.xz
+  - mv arduino-$IDE_VERSION $HOME/arduino-ide
+  - export PATH=$PATH:$HOME/arduino-ide
+    # Arduino IDE adds a lot of noise caused by network traffic, trying to firewall it off
+  - sudo iptables -P INPUT DROP
+  - sudo iptables -P FORWARD DROP
+  - sudo iptables -P OUTPUT ACCEPT
+  - sudo iptables -A INPUT -i lo -j ACCEPT
+  - sudo iptables -A OUTPUT -o lo -j ACCEPT
+  - sudo iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+  
+  - if [[ "$BOARD" =~ "arduino:samd:" ]]; then
+      arduino --install-boards arduino:samd &> /dev/null;
+    fi
+  - buildExampleSketch() { arduino --verify --board $BOARD $1; }
+  -  |
+     buildAllExamples(){
+       declare -a failureList=()
+       local failureNum=0
+       shopt -s globstar
+       for i in $PWD/examples/**/*.ino; do
+         echo $i
+         buildExampleSketch $i
+         exit_status=$?
+         if [ $exit_status != 0 ]; then
+           failureNum=$((failureNum + 1))
+           echo Failure Building: $i
+           failureList+=($i)
+         else
+           echo Build Successful: $i
+         fi
+       done
+       echo 
+       echo
+       echo $failureNum total build failures
+       for i in "${failureList[@]}"; do
+         echo Failed to build: $i
+       done
+       
+       return $failureNum;
+      }
+install:
+  - mkdir -p $HOME/Arduino/libraries
+  - ln -s $PWD $HOME/Arduino/libraries/P1AM
+script:
+  - buildAllExamples
+
+  
+

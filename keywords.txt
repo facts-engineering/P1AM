@@ -1,0 +1,61 @@
+# Syntax Coloring Map For P1AM
+
+# Datatypes (KEYWORD1)
+P1AM	KEYWORD1
+P1_HSC	KEYWORD1
+P1	KEYWORD1
+CNT1	KEYWORD1
+CNT2	KEYWORD1
+P1_HSC_Module	KEYWORD1
+P1_HSC_Channel	KEYWORD1
+channelLabel	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+init	KEYWORD2	
+enableBaseController	KEYWORD2
+readDiscrete	KEYWORD2
+readAnalog	KEYWORD2
+readBlockData	KEYWORD2
+writeDiscrete	KEYWORD2
+writeAnalog	KEYWORD2
+writeBlockData	KEYWORD2
+writePWM	KEYWORD2
+writePWMDuty	KEYWORD2
+writePWMFreq	KEYWORD2
+writePWMDir	KEYWORD2
+configureModule	KEYWORD2
+readModuleConfig	KEYWORD2
+checkUnderRange	KEYWORD2
+checkOverRange	KEYWORD2
+checkBurnout	KEYWORD2
+check24V	KEYWORD2
+
+readStatus	KEYWORD2
+getFwVersion	KEYWORD2
+readTemperature	KEYWORD2
+SPICOP_FW_UPDATE	KEYWORD2
+startWD	KEYWORD2
+stopWD	KEYWORD2
+petWD	KEYWORD2
+configWD	KEYWORD2
+printModules	KEYWORD2
+isBaseActive	KEYWORD2
+rollCall	KEYWORD2
+checkConnection	KEYWORD2
+
+readPosition	KEYWORD2
+readAlerts	KEYWORD2
+readRollOver	KEYWORD2
+setPosition	KEYWORD2
+setZResetValue	KEYWORD2
+setRolloverPosition	KEYWORD2
+readInputs	KEYWORD2
+configureChannels	KEYWORD2
+
+# LITERALS (LITERAL1)
+SWITCH_BUILTIN	LITERAL1
+DISCRETE_IN_BLOCK	LITERAL1
+ANALOG_IN_BLOCK	LITERAL1
+DISCRETE_OUT_BLOCK	LITERAL1
+ANALOG_OUT_BLOCK	LITERAL1
+STATUS_IN_BLOCK	LITERAL1
