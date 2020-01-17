@@ -92,7 +92,7 @@ void loop(){  // the loop routine runs over and over again forever:
    
    
    /*Analog Input Data*/
-   P1.readBlockData(rawAnalogIn,32,0,ANALOG_IN_BLOCK);  //Red first 32 bytes (8 channels) of analog input data
+   P1.readBlockData(rawAnalogIn,32,0,ANALOG_IN_BLOCK);  //Read first 32 bytes (8 channels) of analog input data
    
   for(int i = 0; i < 8; i++){
 	  analogChannelReadings[i] |= rawAnalogIn[4*i + 0]<<24;   //OR and shift MSB
@@ -110,7 +110,7 @@ void loop(){  // the loop routine runs over and over again forever:
   }
   
   Serial.println("");
-  delay(5000);	//Wait until we do the next section
+  delay(5000);	//Wait 5 seconds before we do the next section
 
   
   /*Temperature Input Data*/

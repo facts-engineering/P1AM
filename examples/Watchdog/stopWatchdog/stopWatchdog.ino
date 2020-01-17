@@ -38,7 +38,7 @@ void setup() {
      */
   P1.configWD(5000, TOGGLE); //Pass in timer value and set the Watch Dog to TOGGLE mode. Watch Dog timer value is in milliseconds. 
                              //In this example the Watchdog is set to TOGGLE the reset line and it will trigger after 5000 milliseconds
-  P1.startWD();         //start Watch Dog function. Timer starts at 0 and waits the previously passed in value (5000 ms). 
+  P1.startWD();              //start Watch Dog function. Timer starts at 0 and waits the previously passed in value (5000 ms). 
 }
 
 int waitTime = 0;

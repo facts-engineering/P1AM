@@ -31,7 +31,8 @@ void setup() {  // the setup routine runs once:
     ; //wait for Modules to sign on
   }
 
-  P1.configureModule(configData, 1);  //configures channel 1 of the P1-04PWM in slot 1 as an analog output
+  P1.configureModule(configData, 1);  //writes configuration data to the module in slot 1
+  
 
 }
 

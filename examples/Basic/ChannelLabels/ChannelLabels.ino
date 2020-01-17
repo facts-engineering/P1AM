@@ -34,8 +34,8 @@ void setup(){ // the setup routine runs once:
 
 channelLabel waterPump = {1,3};		//In our application, a water pump is controlled by channel 3 of our output module in slot 1 
 channelLabel waterLevel = {2,4};	//We have a level indicator for our tank. If the tank hits a certain level, we need to start pumping.
-
 bool levelReached = false;			//This is where we store our level limit reading
+
 void loop(){  // the loop routine runs over and over again forever:
 	
 	while(levelReached == false){					//Loop until we hit the level we're waiting for

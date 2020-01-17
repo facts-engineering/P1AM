@@ -27,7 +27,7 @@
 
 #include <P1AM.h>
 
-void setup() {  // the loop routine runs over and over again forever:
+void setup() {  // the setup routine runs once:
   pinMode(SWITCH_BUILTIN, INPUT); //sets the switch on the faceplate as an input
   pinMode(LED_BUILTIN, OUTPUT);   //sets the user led to be an output
   
@@ -69,7 +69,7 @@ void setup() {  // the loop routine runs over and over again forever:
 
 
 /*
-   The loop below starts by setting the user LED on to signify that the processor executing code.
+   The loop below starts by setting the user LED on to signify that the processor is executing code.
    The switch position was used to determine the behavoir of the watchdog.
    
    The loop pets the watchdog to restart the timer. Afterwards a delay of 10 seconds will ensure 
@@ -85,6 +85,5 @@ void loop() { // the loop routine runs over and over again forever:
   P1.petWD();       //when called petWD will reset Watchdog timer to 0.
   //P1.stopWD();    //this line can be uncommented to allow the code to continue to execute.
   delay(10000);     //delay 10 seconds
-
 
 }

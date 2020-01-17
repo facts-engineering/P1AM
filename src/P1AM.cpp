@@ -41,8 +41,6 @@ Description: Initialise the P1AM-100 Base Controller. It automatically configure
 Parameters: -None
 
 Returns: 	-uint8_t - Number of good modules that signed on.
-
-Example Code:
 *******************************************************************************/
 uint8_t P1AM::init() {
 	uint32_t slots = 0;
@@ -145,8 +143,10 @@ uint8_t P1AM::init() {
 	}
 	#endif
 
-	delay(50);							//Let the Base Controller complete its end of the sign-on
-	slots = printModules();	//Returns the number of good modules. Prints IDs to serial monitor
+	delay(50);				//Let the Base Controller complete its end of the sign-on
+	#ifdef DEBUG_PRINT_ON
+		slots = printModules();	//Returns the number of good modules. Prints IDs to serial monitor
+	#endif
 	return slots;
 }
 
@@ -156,8 +156,6 @@ Description: Enables or disables base controller during normal operation.
 Parameters: -bool state - On or off control
 
 Returns: 	-none
-
-Example Code: N/A
 *******************************************************************************/
 void P1AM::enableBaseController(bool state){
 
@@ -174,8 +172,6 @@ Parameters: -char* moduleNames[] - List of Module names in order they appear in 
 Returns: 	-uint16_t - Bitmapped representation of errors. A one in any position
 					    represents a error in configuration. E.g. an error in
 					    slot 1 and 3 would return 0x05.
-
-Example Code:
 *******************************************************************************/
 uint16_t P1AM::rollCall(const char* moduleNames[], uint8_t numberOfModules){
 	uint8_t numberGoodPresent = 0;
@@ -224,8 +220,6 @@ Parameters: -uint8_t slot - Slot to read from. Slots start at 1.
 			  least Signficant bit is channel 1.
 
 Returns: 	-uint32_t data read from the module
-
-Example Code:
 *******************************************************************************/
 uint32_t P1AM::readDiscrete(uint8_t slot, uint8_t channel){
 	uint32_t data = 0;
@@ -287,8 +281,6 @@ Parameters: -uint32_t data - Data to write to module
 			  least Signficant bit is channel 1.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::writeDiscrete(uint32_t data,uint8_t slot, uint8_t channel){
 	uint8_t tData[7];
@@ -344,8 +336,6 @@ Parameters: -uint8_t slot - Slot to read from. Slots start at 1.
 
 Returns: 	-uint32_t - Value of channel in counts. 12-bit returns 0-4095,
 			 16-bit returns between 0-65535, etc.
-
-Example Code:
 *******************************************************************************/
 int P1AM::readAnalog(uint8_t slot, uint8_t channel){
 	int data = 0;
@@ -396,8 +386,6 @@ Description: Read a single temperature input module channel.
 Parameters: -uint8_t slot - Slot to read from. Slots start at 1.
 			-uint8_t channel - Channel to read from. Channels start at 1.
 Returns: 	-Value of channel in degrees for temperature. mV for voltages.
-
-Example Code:
 *******************************************************************************/
 float P1AM::readTemperature(uint8_t slot, uint8_t channel){
 	union int2float{
@@ -418,8 +406,6 @@ Parameters: -uint32_t data - Value of channel in counts. 12-bit in range 0-4095,
 			-uint8_t slot - Slot to write to. Slots start at 1.
 			-uint8_t channel - Channel to write to. Channels start at 1.
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::writeAnalog(uint32_t data,uint8_t slot, uint8_t channel){
 	uint8_t tData[7];
@@ -474,8 +460,6 @@ Parameters: -char buf[] - Pointer to an array that will hold the values read. Th
 			 0 is Discrete Input, 1 is Analog Input, 2 is Discrete Output, 3 is Analog Output,4 is Status.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::readBlockData(char buf[], uint16_t len,uint16_t offset, uint8_t type){
 	uint8_t readParams[5];
@@ -520,8 +504,6 @@ Parameters: -char buf[] - Pointer to an array that holds the values to write. Th
 			0 is Discrete Input, 1 is Analog Input, 2 is Discrete Output, 3 is Analog Output,4 is Status.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::writeBlockData(char buf[], uint16_t len,uint16_t offset, uint8_t type){
 	uint8_t readParams[5];
@@ -555,8 +537,6 @@ Parameters: -float duty - Duty cycle. Range 0.00-100.00. You can include up to 2
 			-uint8_t channel - Channel to write to. Channels start at 1.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 	uint8_t mdbLoc = 0;
@@ -612,8 +592,6 @@ Parameters: -float duty - Duty cycle. Range 0.00-100.00. You can include up to 2
 			-uint8_t channel - Channel to write to. Channels start at 1.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::writePWMDuty(float duty,uint8_t slot,uint8_t channel){
 	uint8_t mdbLoc = 0;
@@ -649,8 +627,6 @@ Parameters: -uint32_t freq - Frequency. See module data sheet for range. P1-04PW
 			-uint8_t channel - Channel to write to. Channels start at 1.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::writePWMFreq(uint32_t freq,uint8_t slot,uint8_t channel){
 	uint8_t mdbLoc = 0;
@@ -685,8 +661,6 @@ Parameters: -bool data - Set channel on or off
 			-uint8_t channel - Channel to write to. Channels start at 1.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::writePWMDir(bool data,uint8_t slot, uint8_t channel){
 	 uint8_t mdbLoc = 0;
@@ -718,8 +692,6 @@ Description: Print the names of all the modules in the base to the serial monito
 Parameters: -None
 
 Returns: 	-Number of good sign-ons
-
-Example Code:
 *******************************************************************************/
 uint8_t P1AM::printModules(){
 	uint32_t slot = 0;
@@ -755,8 +727,6 @@ Parameters: -int byteNum - Which status byte to read in. Byte numbering starts a
 			-int slot - Which slot to read from
 
 Returns: 	-char - The status byte.
-
-Example Code:
 *******************************************************************************/
 char P1AM::readStatus(int byteNum,int slot){
 	uint8_t len = 0;
@@ -805,8 +775,6 @@ Parameters: -char buf[] - Array to store the read status bytes in. This function
 			-uint8_t slot - Slot that you want to read status bytes from
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::readStatus(char buf[], uint8_t slot){
 	uint8_t len = 0;
@@ -858,8 +826,6 @@ Parameters: -uint8_t slot - Which slot to read from.
 			
 
 Returns: 	-uint8_t - returns under range status
-
-Example Code:
 *******************************************************************************/
 uint8_t P1AM::checkUnderRange(uint8_t slot, uint8_t channel){
 	uint8_t statusByte = 0;
@@ -884,8 +850,6 @@ Parameters: -uint8_t slot - Which slot to read from.
 			
 
 Returns: 	-uint8_t - returns over range status
-
-Example Code:
 *******************************************************************************/
 uint8_t P1AM::checkOverRange(uint8_t slot, uint8_t channel){
 	uint8_t statusByte = 0;
@@ -910,8 +874,6 @@ Parameters: -uint8_t slot - Which slot to read from.
 			
 
 Returns: 	-uint8_t - returns burnout status
-
-Example Code:
 *******************************************************************************/
 uint8_t P1AM::checkBurnout(uint8_t slot, uint8_t channel){
 	uint8_t statusByte = 0;
@@ -931,8 +893,6 @@ Description: Checks the lost 24V error on  select P1000 modules. Returns 1 if sl
 Parameters: -uint8_t slot - Which slot to read from.
 
 Returns: 	-uint8_t - 1 if 24V is missing. 0 if 24V is present
-
-Example Code:
 *******************************************************************************/
 uint8_t P1AM::check24V(uint8_t slot){
 	uint8_t statusByte = 0;
@@ -952,8 +912,6 @@ Parameters: -uint8_t slot - Slot you want to configure.
 			-char *cfgData - Pointer to array that contains the configuration settings
 
 Returns: 	-bool - Configuration successfully written to Base Controller.
-
-Example Code:
 *******************************************************************************/
 bool P1AM::configureModule(char cfgData[], uint8_t slot){
 	uint8_t len = 0;
@@ -1004,8 +962,6 @@ Parameters: -char *cfgData - Pointer to array that will receive the current conf
 			-uint8_t slot - Slot you want to configure.
 
 Returns: 	-none
-
-Example Code:
 *******************************************************************************/
 void P1AM::readModuleConfig(char cfgData[], uint8_t slot){
 	uint8_t len = 0;
@@ -1051,8 +1007,6 @@ Parameters: -uint16_t milliseconds - Time in milliseconds in range 0-65535.
 			 the Base Controller will toggle the reset pin on the P1AM-100.
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::configWD(uint16_t milliseconds, uint8_t toggle) {
 	uint8_t lowByte;
@@ -1088,8 +1042,6 @@ Description: Begin the watchdog timer. If the watchdog is not configured beforeh
 Parameters: -None
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::startWD() {
 
@@ -1106,8 +1058,6 @@ Description: Stops the watchdog timer from running. Use this is you have code
 Parameters: -None
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::stopWD() {
 
@@ -1125,8 +1075,6 @@ Description: Pets the watchdog i.e. resets the timer so it does not trigger. Any
 Parameters: -None
 
 Returns: 	-None
-
-Example Code:
 *******************************************************************************/
 void P1AM::petWD() {
 
@@ -1141,8 +1089,6 @@ Description: Print out current Base Controller firmware version to serial monito
 Parameters: -None
 
 Returns: 	-uint32_t - Firmware Version byte format X.Y.ZZ
-
-Example Code:
 *******************************************************************************/
 uint32_t P1AM::getFwVersion(){
 	uint32_t version = 0;
@@ -1170,8 +1116,6 @@ Description: Flag to see if the Base Controller has been initialised and is runn
 Parameters: -None
 
 Returns: 	-Bool - Returns true if Base Controller has been intialised and is active
-
-Example Code:
 *******************************************************************************/
 bool P1AM::isBaseActive(){
 	bool isActive = false;
@@ -1195,8 +1139,6 @@ Parameters: -uint8_t numberOfModules - Number of modules expected. Useful if a m
 
 Returns: 	-uint8_t - Returns the slot number of the leftmost module in the base
 			 that is no longer functioning.
-
-Example Code:
 *******************************************************************************/
 uint8_t P1AM::checkConnection(uint8_t numberOfModules){
 	uint8_t expectedSlots = 0;

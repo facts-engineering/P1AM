@@ -40,6 +40,17 @@ void setup(){ // the setup routine runs once:
     ; //Wait for Modules to Sign on   
   }
   
+  /*
+  Comments in the lines below shows other settings
+  -isRotary - If true configures channel as a rotary encoder. 
+			  This means it will roll over at the rollover position.
+  -enableZReset - If true, resets current position when channel's Z input is high.
+  -inhibitOn - When the selected input is high, counting is inhibited. "false" 
+			   disables this feature.
+  -mode - Select counting mode: Step and Direction, Quadrature 4X, and Quadrature 1X.
+  -polarity - Sets directional polarity of counting.
+  
+  */
   HSC.CNT1.isRotary = true;
   HSC.CNT1.enableZReset = false;
   HSC.CNT1.inhibitOn = false; //oneZ, threeIn, twoZ, fourIn

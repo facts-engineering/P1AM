@@ -9,7 +9,12 @@
   temperature reading. These include thermistors, thermocouples and resistance temperature detectors (RTDs) 
   
   This example works with all P1000 Series:
-   - Temperature input modules such as P1-04NTC, P1-04RTD, P1-04THM.
+   - Temperature input modules such as P1-04NTC, P1-04RTD, and P1-04THM.
+  
+  The default ranges are:
+   - P1-04THM: J-Type
+   - P1-04RTD: Pt100
+   - P1-04NTC: 2252
   
   This example will print channel 2's temperature to the serial monitor every second.
   This can be tested by:
@@ -17,6 +22,7 @@
    - Shorting the positive and negative inputs of a THM module to read room temperature.
    - Using a potentiometer to simulate thermistor/RTD signal on an NTC or RTD
       module and using a temp. vs. resistance chart to verify values. 
+	  
      
   The reported temperature defaults to degrees Fahrenheit. 
 	 _____  _____ 

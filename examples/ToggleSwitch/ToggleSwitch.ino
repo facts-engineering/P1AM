@@ -1,7 +1,7 @@
 /*
 	Example: ToggleSwitch
 
-	This example shows how to use the toggle switch and LED on the fron of the P1AM-100
+	This example shows how to use the toggle switch and LED on the front of the P1AM-100
 
 	This example does not require any modules
 
@@ -33,7 +33,7 @@ bool switchState = 0; //Variable to hold the current state of the switch
 
 void loop(){  // the loop routine runs over and over again forever:
   
-  switchState = digitalRead(SWITCH_BUILTIN);//Read the state of the 
+  switchState = digitalRead(SWITCH_BUILTIN);//Read the state of the switch
   digitalWrite(LED_BUILTIN,switchState);	//Update the LED
   
 }

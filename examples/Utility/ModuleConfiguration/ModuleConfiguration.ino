@@ -2,7 +2,7 @@
  Example: ModuleConfiguration
  
  This example shows how to configure modules.
- Configuration is written to a module to shange things such as:
+ Configuration is written to a module to change things such as:
  - number of active channels
  - type of input e.g. thermocouple type
  - input or output range
@@ -15,7 +15,7 @@
   Afterwards it will print the configuration status to the serial monitor and then the
   channel data from channel 1.
  
- Configuration data for P1000 modules can be found on !!!!!!!!!{include link here when finalized}!!!!!!!!!!!!!!! 
+ Configuration data for P1000 modules can be found on https://facts-engineering.github.io/config.html 
    _____  _____ 
   |  P  ||  S  |
   |  1  ||  L  |
@@ -36,7 +36,7 @@
 
 const char configData[2] = {0x40, 0x00};      //Creates an array to store module configuration data. 0x4000 will enable only channel 1 as an input. 
 
-void setup(){  // the loop routine runs over and over again forever:
+void setup(){  // the setup routine runs once
   
   Serial.begin(115200);   //initialize serial communication at 115200 bits per second 
   while(!P1.init()){
@@ -48,6 +48,7 @@ void setup(){  // the loop routine runs over and over again forever:
 
 int channelData;    //variable to store analog data read from module
 char readConfigData[2]; //array to store configuration data read from module
+
 void loop(){ // the loop routine runs over and over again forever:
 
   P1.readModuleConfig(readConfigData, 1);  //reads the configuration data of the module in slot 1

@@ -3,10 +3,12 @@ ProductivityOpen P1AM-100 [![Build Status](https://travis-ci.org/facts-engineeri
 
 The ProductivityOpen P1AM-100 is an automation platform compatible with Productivity 1000 Series I/O modules, P1AM Series shields, and Arduino MKR format shields. It can be programmed using the Arduino IDE. The board uses the SAMD21G18 Microcontroller like the Arduino MKRZERO and other similar boards.
 
+In depth information on the P1AM family and Productivity 1000 Modules can be found on the reference page here: 
+[P1AM-100 Documentation](https://facts-engineering.github.io/)
+
 Productivity Series modules offer several types of industrial grade I/O 
- - Analog Inputs 
+ - Analog and Temperature Inputs 
  - Analog Outputs
- - Temperature Inputs
  - Discrete Inputs
  - Discrete Outputs and Relays
  - Specialty Modules
@@ -18,11 +20,9 @@ P1.writeDiscrete(HIGH,1,2);  //Turn slot 1 channel 2 on
 float temperature = P1.readTemperature(2, 3);  //Return temperature read from slot 2 channel 3
 ```
 
+The P1AM-100 can be purchased on the [Automation Direct Webstore](https://www.automationdirect.com/adc/shopping/catalog/programmable_controllers/open_source_controllers_(arduino-compatible)/productivityopen_(arduino-compatible)/controllers_-a-_shields/p1am-100)
 
-P1000 Series Modules can be purchased on the [Automation Direct Webstore](https://www.automationdirect.com/adc/shopping/catalog/programmable_controllers/productivity_series_controllers/productivity1000_(stackable_micro_plc))
-
-Information on using P1000 Series Modules with the P1AM-100 can be found on the reference page here: 
-[P1AM-100 Wiki](https://github.com/facts-engineering/P1AM/wiki)
+Productivity 1000 Series Modules can be purchased on the [Automation Direct Webstore](https://www.automationdirect.com/adc/shopping/catalog/programmable_controllers/productivity_series_controllers/productivity1000_(stackable_micro_plc))
 
 # P1AM-100 Installation #
 >Install the Arduino IDE version 1.8.7 or later. We recommend the current version on the [Arduino website](https://www.arduino.cc/en/main/software).
@@ -55,7 +55,7 @@ Boards manager link: `https://raw.githubusercontent.com/facts-engineering/facts-
 
 ### Driver Installation ###
 For Windows 7 and 8 it is required that you install a device driver for the P1AM-100
-[Download driver installer here:](LINK TO DRIVER DOWNLOAD FROM ?raw=true)
+[Download driver installer here](https://github.com/facts-engineering/P1AMCore/raw/master/drivers.zip)
 
 
 # Getting Started #
@@ -81,14 +81,16 @@ The P1AM Base Controller is the chip that directs communcations between the SAMD
 
 The P1AM-100 uses the Arduino MKR format header. The pins are 3.3V tolerant only, so do not apply any 5V signals. 
 
-Industrial rated shields for the P1AM-100 can be purchased from [Automation Direct here](P1AM LINK).
+Industrial rated shields for the P1AM-100 can be purchased from [Automation Direct here](https://www.automationdirect.com/adc/shopping/catalog/programmable_controllers/open_source_controllers_(arduino-compatible)/productivityopen_(arduino-compatible)/controllers_-a-_shields/).
 
 Please read through the Base Controller section above to determine if your shield pinout will work properly. For example, the Arduino MKR RGB Shield is not compatible with the P1AM-100 as it uses pins A3 and A4. 
 
 
 
-# Useful Links #
-[ProBlocks Graphical Programming from ADC](LINK HERE)
+# Additional Resources #
+[ProductivityBlocks Graphical Programming from Automation Direct](https://github.com/AutomationDirect/ProductivityBlocks)
+
+[Automation Direct P1AM Customer Forum](http://go2adc.com/p1am)
 
 [Automation Direct Webstore](https://www.automationdirect.com/adc/home/home)
 
