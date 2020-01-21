@@ -905,7 +905,9 @@ uint8_t P1AM::check24V(uint8_t slot){
 
 /*******************************************************************************
 Description: Manually configure a module. Use this if you want to use a setting
-			 that is not the default for a module. See !!!!DOC FOR CONFIG!!!!! for more information.
+			 that is not the default for a module. 
+			 Visit https://facts-engineering.github.io/config.html
+			 for more information.
 
 
 Parameters: -uint8_t slot - Slot you want to configure.
