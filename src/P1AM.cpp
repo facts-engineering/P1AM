@@ -906,9 +906,7 @@ uint8_t P1AM::check24V(uint8_t slot){
 /*******************************************************************************
 Description: Manually configure a module. Use this if you want to use a setting
 			 that is not the default for a module. 
-			 Visit https://facts-engineering.github.io/config.html
-			 for more information.
-
+			 Visit https://facts-engineering.github.io/config.html for more information
 
 Parameters: -uint8_t slot - Slot you want to configure.
 			-char *cfgData - Pointer to array that contains the configuration settings
@@ -1048,7 +1046,10 @@ Returns: 	-None
 void P1AM::startWD() {
 
 	spiSendRecvByte(STARTWD_HDR);		//Send "StartWD" header to Base Controller
-	dataSync();
+	if(spiTimeout(1000*200) == true){
+		spiSendRecvByte(DUMMY);		//Send "PetWD" header to Base Controller
+		dataSync();
+	}
 	return;
 }
 
@@ -1064,7 +1065,10 @@ Returns: 	-None
 void P1AM::stopWD() {
 
 	spiSendRecvByte(STOPWD_HDR);		//Send "StopWD" header to Base Controller
-	dataSync();
+	if(spiTimeout(1000*200) == true){
+		spiSendRecvByte(DUMMY);		//Send "PetWD" header to Base Controller
+		dataSync();
+	}
 	return;
 }
 
@@ -1081,7 +1085,10 @@ Returns: 	-None
 void P1AM::petWD() {
 
 	spiSendRecvByte(PETWD_HDR);		//Send "PetWD" header to Base Controller
-	dataSync();
+	if(spiTimeout(1000*200) == true){
+		spiSendRecvByte(DUMMY);		//Send "PetWD" header to Base Controller
+		dataSync();
+	}
 	return;
 }
 
