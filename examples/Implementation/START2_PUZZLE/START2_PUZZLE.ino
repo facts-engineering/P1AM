@@ -72,15 +72,15 @@ void loop() {
   P1.writeDiscrete(0,1);  //Clear TRS at end of game
   
 }
-unsigned long playGame(byte secretNumber){
+unsigned long playGame(byte secretNum){
   byte switches;
   int numberRight = 0;
   byte outputValue = 0;
 
   //Keep checking until our switches match our secret number
-  while(switches != secretNumber){ 
+  while(switches != secretNum){ 
     switches =  P1.readDiscrete(2);
-    numberRight = checkScore(secretNumber, switches); 
+    numberRight = checkScore(secretNum, switches); 
     P1.writeDiscrete(numberRight, 1);  
   }
 
@@ -89,9 +89,9 @@ unsigned long playGame(byte secretNumber){
 
 
 byte checkScore(byte goal, byte current){
-  byte n;
-  byte matching;
-  byte score;
+  byte n = 0;
+  byte matching = 0;
+  byte score = 0;
   
   n = ~(goal ^ current); //Sets all matching bits. XNOR logic gate.
   
