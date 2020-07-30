@@ -552,7 +552,7 @@ void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 		return;
 	}
 
-	if((channel <= 0) || (channel > 4))){		
+	if((channel <= 0) || (channel > 4)){		
 		debugPrintln("This channel is not valid");
 		return;
 	}
@@ -609,7 +609,7 @@ void P1AM::writePWMDuty(float duty,uint8_t slot,uint8_t channel){
 		return;
 	}
 	
-	if((channel <= 0) || (channel > 4))){		
+	if((channel <= 0) || (channel > 4)){		
 		debugPrintln("This channel is not valid");
 		return;
 	}
@@ -648,7 +648,7 @@ void P1AM::writePWMFreq(uint32_t freq,uint8_t slot,uint8_t channel){
 		return;
 	}
 	
-	if((channel <= 0) || (channel > 4))){		
+	if((channel <= 0) || (channel > 4)){		
 		debugPrintln("This channel is not valid");
 		return;
 	}
@@ -687,7 +687,7 @@ void P1AM::writePWMDir(bool data,uint8_t slot, uint8_t channel){
 		return;
 	}
 	
-	if((channel <= 0) || (channel > 4))){		
+	if((channel <= 0) || (channel > 4)){		
 		debugPrintln("This channel is not valid");
 		return;
 	}
@@ -705,6 +705,7 @@ void P1AM::writePWMDir(bool data,uint8_t slot, uint8_t channel){
 	dataSync();
 	return;
 }
+
 
 /*******************************************************************************
 Description: Print the names of all the modules in the base to the serial monitor
