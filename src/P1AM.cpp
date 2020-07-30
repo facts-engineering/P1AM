@@ -552,6 +552,11 @@ void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 		return;
 	}
 
+	if((channel <= 0) || (channel > 4))){		
+		debugPrintln("This channel is not valid");
+		return;
+	}
+
 	if((mdb[mdbLoc].dataSize & 0xF0) !=  0xA0){		//Is this PWM
 		debugPrint("Slot ");
 		debugPrint(slot);
@@ -603,6 +608,11 @@ void P1AM::writePWMDuty(float duty,uint8_t slot,uint8_t channel){
 		debugPrintln("Slots must be between 1 and 15");
 		return;
 	}
+	
+	if((channel <= 0) || (channel > 4))){		
+		debugPrintln("This channel is not valid");
+		return;
+	}
 
 	if((mdb[mdbLoc].dataSize & 0xF0) !=  0xA0){		//Is this PWM
 		debugPrint("Slot ");
@@ -637,6 +647,11 @@ void P1AM::writePWMFreq(uint32_t freq,uint8_t slot,uint8_t channel){
 		debugPrintln(": Slots must be between 1 and 15");
 		return;
 	}
+	
+	if((channel <= 0) || (channel > 4))){		
+		debugPrintln("This channel is not valid");
+		return;
+	}
 
 	if((mdb[mdbLoc].dataSize & 0xF0) !=  0xA0){		//Is this PWM
 		debugPrint("Slot ");
@@ -669,6 +684,11 @@ void P1AM::writePWMDir(bool data,uint8_t slot, uint8_t channel){
 
 	if((slot < 1) || (slot > 15)){
 		debugPrintln("Slots must be between 1 and 15");
+		return;
+	}
+	
+	if((channel <= 0) || (channel > 4))){		
+		debugPrintln("This channel is not valid");
 		return;
 	}
 
