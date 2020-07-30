@@ -560,7 +560,7 @@ void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 	}
 
 	for(int i=0;i<slot-1;i++){
-		tempLoc = baseSlot[i-1].dbLoc;
+		tempLoc = baseSlot[i].dbLoc;
 		if(mdb[tempLoc].aoBytes > 0){
 			offset += mdb[tempLoc].aoBytes;		//get offset of analog bytes
 		}
