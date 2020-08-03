@@ -75,7 +75,12 @@ uint8_t P1AM::init() {
 			delay(5);
 			slots = spiSendRecvByte(DUMMY);		//Get number of modules in base
 			if(slots == 0 || slots > 15){
-				delay(500);
+				if(retry > 2){
+					enableBaseController(LOW);	//Disable base controller
+					delay(10);
+					enableBaseController(HIGH);	//Start base controller
+					delay(10);
+				}
 				retry++;		//Let Base Controller retry
 			}
 		}
@@ -644,7 +649,7 @@ void P1AM::writePWMFreq(uint32_t freq,uint8_t slot,uint8_t channel){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 
 	if((slot < 1) || (slot > 15)){
-		debugPrintln(": Slots must be between 1 and 15");
+		debugPrintln("Slots must be between 1 and 15");
 		return;
 	}
 	
