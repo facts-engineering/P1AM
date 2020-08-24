@@ -75,7 +75,12 @@ uint8_t P1AM::init() {
 			delay(5);
 			slots = spiSendRecvByte(DUMMY);		//Get number of modules in base
 			if(slots == 0 || slots > 15){
-				delay(500);
+				if(retry > 2){
+					enableBaseController(LOW);	//Disable base controller
+					delay(10);
+					enableBaseController(HIGH);	//Start base controller
+					delay(10);
+				}
 				retry++;		//Let Base Controller retry
 			}
 		}
@@ -552,6 +557,11 @@ void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 		return;
 	}
 
+	if((channel <= 0) || (channel > 4)){		
+		debugPrintln("This channel is not valid");
+		return;
+	}
+
 	if((mdb[mdbLoc].dataSize & 0xF0) !=  0xA0){		//Is this PWM
 		debugPrint("Slot ");
 		debugPrint(slot);
@@ -560,7 +570,7 @@ void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 	}
 
 	for(int i=0;i<slot-1;i++){
-		tempLoc = baseSlot[i-1].dbLoc;
+		tempLoc = baseSlot[i].dbLoc;
 		if(mdb[tempLoc].aoBytes > 0){
 			offset += mdb[tempLoc].aoBytes;		//get offset of analog bytes
 		}
@@ -603,6 +613,11 @@ void P1AM::writePWMDuty(float duty,uint8_t slot,uint8_t channel){
 		debugPrintln("Slots must be between 1 and 15");
 		return;
 	}
+	
+	if((channel <= 0) || (channel > 4)){		
+		debugPrintln("This channel is not valid");
+		return;
+	}
 
 	if((mdb[mdbLoc].dataSize & 0xF0) !=  0xA0){		//Is this PWM
 		debugPrint("Slot ");
@@ -634,7 +649,12 @@ void P1AM::writePWMFreq(uint32_t freq,uint8_t slot,uint8_t channel){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 
 	if((slot < 1) || (slot > 15)){
-		debugPrintln(": Slots must be between 1 and 15");
+		debugPrintln("Slots must be between 1 and 15");
+		return;
+	}
+	
+	if((channel <= 0) || (channel > 4)){		
+		debugPrintln("This channel is not valid");
 		return;
 	}
 
@@ -671,6 +691,11 @@ void P1AM::writePWMDir(bool data,uint8_t slot, uint8_t channel){
 		debugPrintln("Slots must be between 1 and 15");
 		return;
 	}
+	
+	if((channel <= 0) || (channel > 4)){		
+		debugPrintln("This channel is not valid");
+		return;
+	}
 
 	if((mdb[mdbLoc].dataSize & 0xF0) !=  0xA0){		//Is this PWM
 		debugPrint("Slot ");
@@ -685,6 +710,7 @@ void P1AM::writePWMDir(bool data,uint8_t slot, uint8_t channel){
 	dataSync();
 	return;
 }
+
 
 /*******************************************************************************
 Description: Print the names of all the modules in the base to the serial monitor
