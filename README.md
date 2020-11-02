@@ -54,7 +54,7 @@ After you have installed the Arduino IDE you will need to follow one of the libr
 Boards manager link: `https://raw.githubusercontent.com/facts-engineering/facts-engineering.github.io/master/package_productivity-P1AM-boardmanagermodule_index.json`
 
 ### Driver Installation ###
-For Windows 7 and 8 it is required that you install a device driver for the P1AM-100
+For Windows users it is required that you install a device driver for the P1AM-100
 [Download driver installer here](https://github.com/facts-engineering/P1AMCore/raw/master/drivers.zip)
 
 
