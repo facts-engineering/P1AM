@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
   P1AM.h - Library for Communicating with P1000 Series Modules
-  Library V1.0.3
+  Library V1.0.4
 */
 
 #ifndef P1AM_h

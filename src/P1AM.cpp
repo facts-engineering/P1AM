@@ -467,7 +467,7 @@ Parameters: -char buf[] - Pointer to an array that will hold the values read. Th
 Returns: 	-None
 *******************************************************************************/
 void P1AM::readBlockData(char buf[], uint16_t len,uint16_t offset, uint8_t type){
-	uint8_t readParams[5];
+	uint8_t readParams[6];
 
 	if((len+offset) > 1200){		//max of data array is 1200, so we can't read past that
 		len = 1200-offset;		//adjust len in case we're trying to read too far
@@ -511,7 +511,6 @@ Parameters: -char buf[] - Pointer to an array that holds the values to write. Th
 Returns: 	-None
 *******************************************************************************/
 void P1AM::writeBlockData(char buf[], uint16_t len,uint16_t offset, uint8_t type){
-	uint8_t readParams[5];
 
 	if((len+offset) > 1200){		//max of data array is 1200, so we can't read past that
 		len = 1200-offset;		//adjust len in case we're trying to read too far
@@ -577,7 +576,7 @@ void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 	}
 
 	offset += (channel - 1) * 8;	//Each channel uses 8 bytes
-	dutyInt = (uint32_t)duty * 100;// shift decimal over 2 places and cast off remainder. e.g. 12.3456 turns into 1234
+	dutyInt = (uint32_t)(duty * 100);// shift decimal over 2 places and cast off remainder. e.g. 12.3456 turns into 1234
 
 	tData[3] = (dutyInt>>0)  & 0xFF;	//shift and mask to bytes
 	tData[2] = (dutyInt>>8)  & 0xFF;
@@ -626,7 +625,7 @@ void P1AM::writePWMDuty(float duty,uint8_t slot,uint8_t channel){
 		return;		//Not PWM
 	}
 
-	dutyInt = (uint32_t)duty * 100;// shift decimal over 2 places and cast off remainder. e.g. 12.3456 turns into 1234
+	dutyInt = (uint32_t)(duty * 100);// shift decimal over 2 places and cast off remainder. e.g. 12.3456 turns into 1234
 	channel = 1 + ((channel-1) * 2);
 	P1.writeAnalog(dutyInt,slot,channel);
 
