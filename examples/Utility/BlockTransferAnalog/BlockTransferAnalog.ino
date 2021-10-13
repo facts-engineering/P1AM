@@ -95,7 +95,7 @@ void loop(){  // the loop routine runs over and over again forever:
    P1.readBlockData(rawAnalogIn,32,0,ANALOG_IN_BLOCK);  //Read first 32 bytes (8 channels) of analog input data
    
   for(int i = 0; i < 8; i++){
-	  analogChannelReadings[i] |= rawAnalogIn[4*i + 0]<<24;   //OR and shift MSB
+	  analogChannelReadings[i] = rawAnalogIn[4*i + 0]<<24;   //OR and shift MSB
 	  analogChannelReadings[i] |= rawAnalogIn[4*i + 1]<<16;   //OR and shift 3rd byte
 	  analogChannelReadings[i] |= rawAnalogIn[4*i + 2]<<8; 	  //OR and shift 2nd byte
     analogChannelReadings[i] |= rawAnalogIn[4*i + 3];       //OR LSB
