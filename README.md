@@ -1,4 +1,4 @@
-ProductivityOpen P1AM-100 [![Build Status](https://travis-ci.org/facts-engineering/P1AM.svg?branch=master)](https://travis-ci.org/facts-engineering/P1AM)
+ProductivityOpen P1AM-100 [![Build Status](https://github.com/facts-engineering/P1AM/actions/workflows/main.yml/badge.svg)](https://github.com/facts-engineering/P1AM/actions)
 ============================
 
 The ProductivityOpen P1AM-100 is an automation platform compatible with Productivity 1000 Series I/O modules, P1AM Series shields, and Arduino MKR format shields. It can be programmed using the Arduino IDE. The board uses the SAMD21G18 Microcontroller like the Arduino MKRZERO and other similar boards.
@@ -15,7 +15,7 @@ Productivity Series modules offer several types of industrial grade I/O
 
 The P1AM Library provides a simple interface for controlling P1000 Modules
 ```C++
-P1.writeDiscrete(HIGH,1,2);  //Turn slot 1 channel 2 on
+P1.writeDiscrete(HIGH, 1, 2);  //Turn slot 1 channel 2 on
 
 float temperature = P1.readTemperature(2, 3);  //Return temperature read from slot 2 channel 3
 ```
