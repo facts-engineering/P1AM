@@ -136,6 +136,8 @@ uint8_t P1AM::init() {
 	free(modules.IDs);
 	free(baseControllerConstants);
 
+	delay(10);
+
 	#ifndef AUTO_CONFIG_OFF
 	for (int i = 0; i < slots; i++){ 	//default config routine
 		dbLoc = baseSlot[i].dbLoc;
