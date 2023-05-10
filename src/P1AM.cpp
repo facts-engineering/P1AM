@@ -1311,43 +1311,35 @@ char *P1AM::loadConfigBuf(int moduleID){
 	char *defaultCfg;
 
 	switch(moduleID){
+        case 0x34605582:
+			return (char*)P1_04AD_1_DEFAULT_CONFIG;
+		case 0x34605583:
+			return (char*)P1_04AD_2_DEFAULT_CONFIG;
 		case 0x34605590:
 			return (char*)P1_04ADL_2_DEFAULT_CONFIG;
-			break;
 		case 0x34608C8E:
 			return (char*)P1_04NTC_DEFAULT_CONFIG;
-			break;
 		case 0x34608C81:
 			return (char*)P1_04THM_DEFAULT_CONFIG;
-			break;
 		case 0x34605588:
 			return (char*)P1_04RTD_DEFAULT_CONFIG;
-			break;
 		case 0x34605581:
 			return (char*)P1_04AD_DEFAULT_CONFIG;
-			break;
 		case 0x3460558F:
 			return (char*)P1_04ADL_1_DEFAULT_CONFIG;
-			break;
 		case 0x34A0558A:
 			return (char*)P1_08ADL_1_DEFAULT_CONFIG;
-			break;
 		case 0x34A0558B:
 			return (char*)P1_08ADL_2_DEFAULT_CONFIG;
-			break;
 		case 0x5461A783:
 			return (char*)P1_04ADL2DAL_1_DEFAULT_CONFIG;
-			break;
 		case 0x5461A784:
 			return (char*)P1_04ADL2DAL_2_DEFAULT_CONFIG;
-			break;
 		case 0x1403F481:
 			return (char*)P1_04PWM_DEFAULT_CONFIG;
-			break;
 		case 0x34A5A481:
 			return (char*)P1_02HSC_DEFAULT_CONFIG;
 		default:
-		debugPrintln("wut");
 			break;
 	}
 }
