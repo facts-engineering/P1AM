@@ -77,6 +77,10 @@ const struct moduleProps
 
 	{0x34605581, 0, 0, 16, 0, 12, 18, 16, "P1-04AD"},	//P1-04AD
 
+    {0x34605582, 0, 0, 16, 0, 12, 2, 16, "P1-04AD-1"},	//P1-04AD-1
+
+	{0x34605583, 0, 0, 16, 0, 12, 2, 16, "P1-04AD-2"},	//P1-04AD-2
+
 	{0x34605588, 0, 0, 16, 0, 12, 8, 16, "P1-04RTD"},	//P1-04RTD
 
 	{0x3460558F, 0, 0, 16, 0, 12, 2, 12, "P1-04ADL-1"}, //P1-04ADL-1
@@ -109,6 +113,10 @@ const struct moduleProps
 
 	{0x00000000, 0, 0, 0, 0, 0, 0, 0, "BAD SLOT"} //empty in case no modules are defined.
 };
+
+const char P1_04AD_1_DEFAULT_CONFIG[] = {0x40,0x03};
+
+const char P1_04AD_2_DEFAULT_CONFIG[] = {0x40,0x03};
 
 const char P1_04ADL_1_DEFAULT_CONFIG[] = {0x40,0x03};
 
