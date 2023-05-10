@@ -114,6 +114,10 @@ const struct moduleProps
 	{0x00000000, 0, 0, 0, 0, 0, 0, 0, "BAD SLOT"} //empty in case no modules are defined.
 };
 
+const char P1_04AD_1_DEFAULT_CONFIG[] = {0x40,0x03};
+
+const char P1_04AD_2_DEFAULT_CONFIG[] = {0x40,0x03};
+
 const char P1_04ADL_1_DEFAULT_CONFIG[] = {0x40,0x03};
 
 const char P1_04ADL_2_DEFAULT_CONFIG[] = {0x40,0x03};
