@@ -81,6 +81,7 @@ class P1AM{
 	bool isBaseActive();									//Check if Base Controller is currently configured. If not, call init.
 	uint8_t checkConnection(uint8_t numberOfModules = 0);	//Checks the modules to see if a connection has been lost. Returns first missing module.
 	bool Base_Controller_FW_UPDATE(unsigned int fwLen);		//For FW update of Base Controller
+	moduleProps readSlotProps(uint8_t slot);                //Returns the module properties at the given slot location.
 	
 	//Label functions - functionally the same as the above Data IO but use the channelLabel datatype for easier to read code.
 	uint32_t readDiscrete(channelLabel label);
