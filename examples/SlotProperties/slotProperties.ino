@@ -1,3 +1,33 @@
+/*
+	Example: Slot Properties
+
+	This example shows how to access the module properties at a given slot. 
+	You can then use the module properties in your code without needing to know
+  what is in the slot at compile time.  This example uses readBlockData to efficiently
+  scan through the inputs for changes.
+
+	This example works with all P1000 Series:
+	 - Discrete input modules such as P1-08SIM, P1-08ND3, P1-08NA, etc
+	 - Discrete combo modules such as P1-15CDD1, P1-15CDD2, P1-16CDR, etc.  
+
+	This example will detect the change of any input and then "do something".
+	 _____  _____  _____
+	|  P  ||  S  ||  S  |
+	|  1  ||  L  ||  L  |
+	|  A  ||  O  ||  O  |
+	|  M  ||  T  ||  T  |
+	|  -  ||     ||     |
+	|  1  ||  0  ||  0  |
+	|  0  ||  1  ||  2  |
+	|  0  ||     ||     | etc...
+	 ¯¯¯¯¯  ¯¯¯¯¯  ¯¯¯¯¯
+ 	Written by Brett Bowden
+ 	Licensed under the MIT license.
+*/
+
+
+#include <P1AM.h>
+
 uint8_t digitalInputBytes = 0;
 uint8_t digitalOutputBytes = 0;
 uint8_t numberOfSlices = 0;
