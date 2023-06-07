@@ -752,17 +752,24 @@ uint8_t P1AM::printModules(){
 Description: Return the module properties for a given slot
 
 Parameters: -uint8_t slot - Slot of which you want the module parameters.
-                            Numbering starts at 0.
+			    Slot 1 is module closest to processor.
 
 Returns:    -moduleProps - moduleProps structure containing the specific paramters
                            at the give slot.
 *******************************************************************************/
 moduleProps P1AM::readSlotProps(uint8_t slot){
+	
 	uint8_t dbLoc = 0;
 	moduleProps _slotProps;
+	
+	if((slot < 1) || (slot > 15)){
+		debugPrintln("Slots must be between 1 and 15");
+		_slotProps = mdb[0];
+		return _slotProps;
+	}
 
-	if (baseSlot[slot].dbLoc != 0) {
-		dbLoc = baseSlot[slot].dbLoc;
+	if (baseSlot[slot-1].dbLoc != 0) {
+		dbLoc = baseSlot[slot-1].dbLoc;
 		_slotProps = mdb[dbLoc];
 	}
 	else {
