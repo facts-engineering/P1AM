@@ -22,9 +22,9 @@
   |  P1 | |   0   | |   0   | |   0   | |   0   ||   0   | 
   |  AM | |   4   | |   8   | |   4   | |   4   ||   4   | 
   |  -  | |   A   | |   D   | |   A   | |   T   ||   D   | 
-  |  1  | |   D   | |   A   | |   D   | |   H   ||   A   | 
-  |  0  | |   L   | |   L   | |       | |   M   ||   L   | 
-  |  0  | |AI - 0 | |AO - 0 | |AI - 16| |AI -32 ||AO - 32| 
+  |  C  | |   D   | |   A   | |   D   | |   H   ||   A   | 
+  |  P  | |   L   | |   L   | |       | |   M   ||   L   | 
+  |  U  | |AI - 0 | |AO - 0 | |AI - 16| |AI -32 ||AO - 32| 
    ¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯  ¯¯¯¯¯¯¯  
   
   
@@ -37,7 +37,7 @@
   This example works with all P1000 Series Analog Modules, but can be adapted to any type of module.
   
   Written by FACTS Engineering
-  Copyright (c) 2019 FACTS Engineering, LLC
+  Copyright (c) 2023 FACTS Engineering, LLC
   Licensed under the MIT license.
 */
 #include <P1AM.h>

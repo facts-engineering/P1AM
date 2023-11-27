@@ -9,7 +9,7 @@
  
 
 	This example will check to see if Slot 1 is a P1-08TRS and Slot 2 
-	is a P1-08SIM. If either module is missing or incorrect the P1AM-100 will:
+	is a P1-08SIM. If either module is missing or incorrect the P1AM-CPU will:
 		1. Report the error to the serial monitor.
 		2. Disable any further writes or reads to or from the module.
 		3. Return a bitmapped representation of any module in error
@@ -23,13 +23,13 @@
 	|  A  ||  O  ||  O  |
 	|  M  ||  T  ||  T  |
 	|  -  ||     ||     |
-	|  1  ||  0  ||  0  |
-	|  0  ||  1  ||  2  |
-	|  0  ||     ||     |
+	|  C  ||  0  ||  0  |
+	|  P  ||  1  ||  2  |
+	|  U  ||     ||     |
 	 ¯¯¯¯¯  ¯¯¯¯¯  ¯¯¯¯¯
 
 	Written by FACTS Engineering
-	Copyright (c) 2019 FACTS Engineering, LLC
+	Copyright (c) 2023 FACTS Engineering, LLC
 	Licensed under the MIT license.
 */
 

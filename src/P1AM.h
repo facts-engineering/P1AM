@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 FACTS Engineering, LLC
+Copyright (c) 2023 FACTS Engineering, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
   P1AM.h - Library for Communicating with P1000 Series Modules
-  Library V1.0.6
 */
 
 #ifndef P1AM_h

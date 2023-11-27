@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 FACTS Engineering, LLC
+Copyright (c) 2023 FACTS Engineering, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,20 +46,16 @@ uint8_t P1AM::init() {
 	uint32_t slots = 0;
 	int dbLoc = 0;
 	char *cfgArray;
-	uint8_t di_bytes = 0;   // Number of DI Bytes
-	uint8_t do_bytes = 0;   // Number of DO Bytes
-	uint8_t ai_bytes = 0;   // Number of AI Bytes
-	uint8_t ao_bytes = 0;   // Number of AO Bytes
-	uint8_t st_bytes = 0;   // Number of Status Bytes
-	uint8_t cfg_bytes;  	// Number of CFG Bytes
+	const uint8_t max_p1_slots = 15;
+	
 	union moduleIDs{		// Use a union as a quick convert between byte arrays and ints
-		uint32_t *IDs;
-		uint8_t *byteArray;
+		uint32_t IDs[max_p1_slots];
+		uint8_t byteArray[max_p1_slots * 4];
 	}modules;
 	uint8_t retry = 0;
 
 
-	memset(baseSlot,0,NUMBER_OF_MODULES);	//Clear base constants array
+	memset(baseSlot,0,sizeof(baseSlot));	//Clear base constants array
 	enableBaseController(HIGH);	//Start base controller
 	delay(100);
 
@@ -91,15 +87,20 @@ uint8_t P1AM::init() {
 		delay(500);
 		return 0;
 	}
-
-	modules.IDs = (uint32_t *)malloc(4*slots);			//reserve memory for IDs
-	modules.byteArray = (uint8_t *)malloc(4*slots);
+	
+	if(slots >  NUMBER_OF_MODULES){
+		Serial.println("\nToo many modules in Base");
+		Serial.print("Device only supports ");
+		Serial.println(NUMBER_OF_MODULES);
+		memset(baseSlot, 0, sizeof(baseSlot));	//Clear base constants array
+		return 0;
+	}
 
 	spiTimeout(1000*200);
 	spiSendRecvBuf(modules.byteArray,slots*4,1);		//slots * 4 bytes per ID code
 
-	uint8_t *baseControllerConstants = (uint8_t *)malloc(1 * slots * 7);//seven elements in module sign on
-	for(int i=0;i<slots;i++){
+	uint8_t baseControllerConstants[1 * max_p1_slots * 7];		//seven elements in module sign on
+	for(uint32_t i=0;i<slots;i++){
 		dbLoc = 0;
 		while (modules.IDs[i] != mdb[dbLoc].moduleID){		//Scan MDB for matching ID and grab its array location
 			if(mdb[dbLoc].moduleID == 0xFFFFFFFF){
@@ -111,35 +112,22 @@ uint8_t P1AM::init() {
 		baseSlot[i].dbLoc = dbLoc;		//MDB Location
 
 		//Grab MDB values and load them into variables for P1AM-100 and array to send to Base Controller
-		di_bytes  = baseControllerConstants[0+i*7]  = mdb[dbLoc].diBytes;
-		do_bytes  = baseControllerConstants[1+i*7]  = mdb[dbLoc].doBytes;
-		ai_bytes  = baseControllerConstants[2+i*7]  = mdb[dbLoc].aiBytes;
-		ao_bytes  = baseControllerConstants[3+i*7]  = mdb[dbLoc].aoBytes;
-		st_bytes  = baseControllerConstants[4+i*7]  = mdb[dbLoc].statusBytes;
-		cfg_bytes = baseControllerConstants[5+i*7]  = mdb[dbLoc].configBytes;
-					baseControllerConstants[6+i*7]  = mdb[dbLoc].dataSize;
-
-		//Zero out for next iteration of loop
-		di_bytes = 0;   // Number of DI Bytes
-		do_bytes = 0;   // Number of DO Bytes
-		ai_bytes = 0;   // Number of AI Bytes
-		ao_bytes = 0;   // Number of AO Bytes
-		st_bytes = 0;   // Number of Status Bytes
-
+		baseControllerConstants[0+i*7]  = mdb[dbLoc].diBytes;
+		baseControllerConstants[1+i*7]  = mdb[dbLoc].doBytes;
+		baseControllerConstants[2+i*7]  = mdb[dbLoc].aiBytes;
+		baseControllerConstants[3+i*7]  = mdb[dbLoc].aoBytes;
+		baseControllerConstants[4+i*7]  = mdb[dbLoc].statusBytes;
+		baseControllerConstants[5+i*7]  = mdb[dbLoc].configBytes;
+		baseControllerConstants[6+i*7]  = mdb[dbLoc].dataSize;
 	}
 
 	spiTimeout(1000*200);
 	delay(1);
 	spiSendRecvBuf(baseControllerConstants,slots*7);	//Send mdb values to Base Controller
-
-	free(modules.byteArray);
-	free(modules.IDs);
-	free(baseControllerConstants);
-
 	delay(10);
 
 	#ifndef AUTO_CONFIG_OFF
-	for (int i = 0; i < slots; i++){ 	//default config routine
+	for (uint32_t i = 0; i < slots; i++){ 	//default config routine
 		dbLoc = baseSlot[i].dbLoc;
 		if(mdb[dbLoc].configBytes > 0){				//Modules with config Bytes need to havea config loaded
 			cfgArray = loadConfigBuf(mdb[dbLoc].moduleID);	//Get pointer to default config for this module
@@ -181,7 +169,6 @@ Returns: 	-uint16_t - Bitmapped representation of errors. A one in any position
 					    slot 1 and 3 would return 0x05.
 *******************************************************************************/
 uint16_t P1AM::rollCall(const char* moduleNames[], uint8_t numberOfModules){
-	uint8_t numberGoodPresent = 0;
 	uint16_t slotError = 0;
 	uint8_t dbLoc = 0;
 	bool singleError;
@@ -237,8 +224,9 @@ uint32_t P1AM::readDiscrete(uint8_t slot, uint8_t channel){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 	len = mdb[mdbLoc].diBytes;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return 0;
 	}
 
@@ -297,8 +285,9 @@ void P1AM::writeDiscrete(uint32_t data,uint8_t slot, uint8_t channel){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 	len = mdb[mdbLoc].doBytes;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 
@@ -353,8 +342,9 @@ int P1AM::readAnalog(uint8_t slot, uint8_t channel){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 	len = mdb[mdbLoc].aiBytes;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return 0;
 	}
 
@@ -422,8 +412,9 @@ void P1AM::writeAnalog(uint32_t data,uint8_t slot, uint8_t channel){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 	len = mdb[mdbLoc].aoBytes;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 
@@ -517,7 +508,6 @@ void P1AM::writeBlockData(char buf[], uint16_t len,uint16_t offset, uint8_t type
 	if((len+offset) > 1200){		//max of data array is 1200, so we can't read past that
 		len = 1200-offset;		//adjust len in case we're trying to read too far
 	}
-
 	uint8_t *tData = (uint8_t *)malloc(len+6);
 	tData[0] = WRITE_BLOCK_HDR;
 	tData[1] = type;		
@@ -525,11 +515,9 @@ void P1AM::writeBlockData(char buf[], uint16_t len,uint16_t offset, uint8_t type
 	tData[3] = len & 0xFF;
 	tData[4] = offset >> 8;
 	tData[5] = offset & 0xFF;
-
 	memcpy(tData+6,buf,len);
 	spiSendRecvBuf(tData,len+6,0);	//data is not stored in passed buffer
 	free(tData);
-
 	dataSync();
 	return;
 }
@@ -553,8 +541,9 @@ void P1AM::writePWM(float duty,uint32_t freq,uint8_t slot,uint8_t channel){
 
 	mdbLoc = baseSlot[slot-1].dbLoc;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 
@@ -610,8 +599,9 @@ void P1AM::writePWMDuty(float duty,uint8_t slot,uint8_t channel){
 
 	mdbLoc = baseSlot[slot-1].dbLoc;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 	
@@ -649,8 +639,9 @@ void P1AM::writePWMFreq(uint32_t freq,uint8_t slot,uint8_t channel){
 
 	mdbLoc = baseSlot[slot-1].dbLoc;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 	
@@ -688,8 +679,9 @@ void P1AM::writePWMDir(bool data,uint8_t slot, uint8_t channel){
 
 	mdbLoc = baseSlot[slot-1].dbLoc;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 	
@@ -725,9 +717,8 @@ uint8_t P1AM::printModules(){
 	uint8_t dbLoc = 0;
 	uint8_t goodSlots = 0;
 
-	while(baseSlot[slot].dbLoc != 0){
+	while(baseSlot[slot].dbLoc != 0 && slot < NUMBER_OF_MODULES){
 		dbLoc = baseSlot[slot].dbLoc;
-
 		if(mdb[dbLoc].moduleID == 0 || mdb[dbLoc].moduleID == 0xFFFFFFFF){
 			Serial.print("Slot ");
 			Serial.print(slot + 1);
@@ -746,7 +737,6 @@ uint8_t P1AM::printModules(){
 	Serial.println("");	//Print an empty line to give us some breathing room later
 	return goodSlots;
 }
-
 
 /*******************************************************************************
 Description: Return the module properties for a given slot
@@ -795,8 +785,9 @@ char P1AM::readStatus(int byteNum,int slot){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 	len = 1;	//only need 1 byte
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return 0;
 	}
 
@@ -842,8 +833,9 @@ void P1AM::readStatus(char buf[], uint8_t slot){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 	len = mdb[mdbLoc].statusBytes;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 
@@ -983,8 +975,9 @@ bool P1AM::configureModule(char cfgData[], uint8_t slot){
 
 	memcpy(cfgForSpi+2,cfgData,len);
 	delay(1);
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return 0;
 	}
 
@@ -1029,8 +1022,9 @@ void P1AM::readModuleConfig(char cfgData[], uint8_t slot){
 	mdbLoc = baseSlot[slot-1].dbLoc;
 	len = mdb[mdbLoc].configBytes;
 
-	if((slot < 1) || (slot > 15)){
-		debugPrintln("Slots must be between 1 and 15");
+	if((slot < 1) || (slot > NUMBER_OF_MODULES)){
+		debugPrint("Slots must be between 1 and ");
+		debugPrintln(NUMBER_OF_MODULES);
 		return;
 	}
 
@@ -1210,7 +1204,6 @@ Returns: 	-uint8_t - Returns the slot number of the leftmost module in the base
 uint8_t P1AM::checkConnection(uint8_t numberOfModules){
 	uint8_t expectedSlots = 0;
 	uint16_t activeSlots = 0;
-	uint8_t badSlot = 0;
 	
 	if(!numberOfModules){
 		while(baseSlot[expectedSlots].dbLoc != 0){
@@ -1304,7 +1297,6 @@ void P1AM::dataSync(){
 	uint32_t currentMillis = 0;
 	uint32_t startMillis = 0;
 	
-	
 	startMillis = millis();
 	while(!digitalRead(slaveAckPin)){
 		currentMillis = millis();
@@ -1339,13 +1331,14 @@ void P1AM::dataSync(){
 }
 
 char *P1AM::loadConfigBuf(int moduleID){
-	char *defaultCfg;
 
 	switch(moduleID){
-        case 0x34605582:
+		 case 0x34605582:
 			return (char*)P1_04AD_1_DEFAULT_CONFIG;
+			break;
 		case 0x34605583:
 			return (char*)P1_04AD_2_DEFAULT_CONFIG;
+			break;
 		case 0x34605590:
 			return (char*)P1_04ADL_2_DEFAULT_CONFIG;
 		case 0x34608C8E:
@@ -1373,6 +1366,7 @@ char *P1AM::loadConfigBuf(int moduleID){
 		default:
 			break;
 	}
+	return (char*)P1_04ADL_1_DEFAULT_CONFIG;
 }
 
 bool P1AM::handleHDR(uint8_t HDR){
@@ -1385,13 +1379,13 @@ bool P1AM::handleHDR(uint8_t HDR){
 
 uint8_t P1AM::spiSendRecvByte(uint8_t data){
 
-	SPI.begin();
-	SPI.beginTransaction(P100_SPI_SETTINGS);
+	_P1AM_SPI.begin();
+	_P1AM_SPI.beginTransaction(P100_SPI_SETTINGS);
 	digitalWrite(slaveSelectPin, LOW);
-	data = SPI.transfer(data);
+	data = _P1AM_SPI.transfer(data);
 	digitalWrite(slaveSelectPin, HIGH);
-	SPI.endTransaction();
-	SPI.end();
+	_P1AM_SPI.endTransaction();
+	_P1AM_SPI.end();
 
 	return data;
 }
@@ -1406,16 +1400,16 @@ uint32_t P1AM::spiSendRecvInt(uint32_t data){
 	tData[2] = (data>>16) & 0xFF;	// data to write to the Base Controller - 1 byte long
 	tData[3] = (data>>24) & 0xFF;	// data to write to the Base Controller - 1 byte long
 
-	SPI.begin();
-	SPI.beginTransaction(P100_SPI_SETTINGS);
+	_P1AM_SPI.begin();
+	_P1AM_SPI.beginTransaction(P100_SPI_SETTINGS);
 	digitalWrite(slaveSelectPin, LOW);
-    rData[0] = SPI.transfer(tData[0]);
-    rData[1] = SPI.transfer(tData[1]);
-    rData[2] = SPI.transfer(tData[2]);
-    rData[3] = SPI.transfer(tData[3]);
+    rData[0] = _P1AM_SPI.transfer(tData[0]);
+    rData[1] = _P1AM_SPI.transfer(tData[1]);
+    rData[2] = _P1AM_SPI.transfer(tData[2]);
+    rData[3] = _P1AM_SPI.transfer(tData[3]);
     digitalWrite(slaveSelectPin, HIGH);
-    SPI.endTransaction();
-	SPI.end();
+    _P1AM_SPI.endTransaction();
+	_P1AM_SPI.end();
 
 	returnInt  = (rData[3]<<24);
 	returnInt += (rData[2]<<16);
@@ -1427,24 +1421,24 @@ uint32_t P1AM::spiSendRecvInt(uint32_t data){
 
 void P1AM::spiSendRecvBuf(uint8_t *buf, int len, bool returnData){
 
-	SPI.begin();
-	SPI.beginTransaction(P100_SPI_SETTINGS);
+	_P1AM_SPI.begin();
+	_P1AM_SPI.beginTransaction(P100_SPI_SETTINGS);
 	digitalWrite(slaveSelectPin, LOW);
 
 	if(returnData){
 		for(int i = 0; i < len; ++i){
-			buf[i] = SPI.transfer(buf[i]); //return what we get into our buffer
+			buf[i] = _P1AM_SPI.transfer(buf[i]); //return what we get into our buffer
 		}
 	}
 	else{
 		for(int i = 0; i < len; ++i){
-			SPI.transfer(buf[i]); 		//or don't return what we get
+			_P1AM_SPI.transfer(buf[i]); 		//or don't return what we get
 		}
 	}
 
 	digitalWrite(slaveSelectPin, HIGH);
-	SPI.endTransaction();
-	SPI.end();
+	_P1AM_SPI.endTransaction();
+	_P1AM_SPI.end();
 	return;
 }
 
@@ -1482,7 +1476,7 @@ bool P1AM::Base_Controller_FW_UPDATE(unsigned int fwLen){
 
 	uint8_t *chunkBuffer = (uint8_t *)malloc(chunkSize);	//Make spacs for FW chunks
 
-	SPI.begin();			//Start SPI
+	_P1AM_SPI.begin();			//Start SPI
 	Serial.println("Establishing Communication");
 
 	tData[0] = FW_UPDATE_HDR;
@@ -1572,4 +1566,6 @@ bool P1AM::Base_Controller_FW_UPDATE(unsigned int fwLen){
 		Serial.println("FW Update FAIL :c");
 		return 0;
 	}
+	Serial.println("Unknown Error");
+	return 0;
 }

@@ -14,15 +14,15 @@
   |  A  ||  A  ||  -  |
   |  M  ||  M  ||  C  |
   |  -  ||  -  ||  O  |
-  |  G  ||  1  ||  M  |
-  |  P  ||  0  ||  B  |
-  |  I  ||  0  ||  O  |
+  |  G  ||  C  ||  M  |
+  |  P  ||  P  ||  B  |
+  |  I  ||  U  ||  O  |
   |  O  ||     ||     |
    ¯¯¯¯¯  ¯¯¯¯¯  ¯¯¯¯¯
   This example requires an LED (not provided in the start kit) attached to pin 6 of the P1AM-GPIO terminal block.
 
   Written by FACTS Engineering
-  Copyright (c) 2019 FACTS Engineering, LLC
+  Copyright (c) 2023 FACTS Engineering, LLC
   Licensed under the MIT license.
 */
 

@@ -13,13 +13,13 @@
 
  //To detect a base failure and re-init
  Step 1: Load program in current form. 
- Step 2: Connect USB cable from PC to P1AM-100. 
+ Step 2: Connect USB cable from PC to P1AM-CPU. 
  Step 3: Remove 24Vdc power and reapply. *Note: Open serial Monitor. You should have no errors. 
  Step 4: Verify Slot 1 Channel 2 output is blinking.
  
  // To see a failure
  Step 5: Comment out lines 55-62.
- Step 6: Upload to the P1AM-100.
+ Step 6: Upload to the P1AM-CPU.
  Step 7: Remove 24Vdc power & reapply.*Note: Open serial Monitor you will get a "Base Sync Timeout" error. 
  Step 8: The output on Slot 1 Channel 2 should not be blinking.
 
@@ -31,13 +31,13 @@
                  |  A  ||  O  |
                  |  M  ||  T  |
                  |  -  ||     |
-                 |  1  ||  0  |
-                 |  0  ||  1  |
-                 |  0  ||     |
+                 |  C  ||  0  |
+                 |  P  ||  1  |
+                 |  U  ||     |
                   ¯¯¯¯¯  ¯¯¯¯¯ 
                  
   Written by FACTS Engineering and AutomationDirect. 
-  Copyright (c) 2020 FACTS Engineering, LLC
+  Copyright (c) 2023 FACTS Engineering, LLC
   Licensed under the MIT license.
 */
 
