@@ -2,7 +2,7 @@
     stopWatchdog example
 
     The watchdog timer is a safety feature that will stop code from
-    executing if the P1AM-100 is not operating properly. It is used to detect
+    executing if the P1AM-CPU is not operating properly. It is used to detect
     and recover from potential hardware or programming faults.
 
     This example shows how to initialize and then stop the watchdog timer. 
@@ -16,12 +16,12 @@
 	|  A  ||  O  |
 	|  M  ||  T  |
 	|  -  ||     |
-	|  1  ||  0  |
-	|  0  ||  1  |
-	|  0  ||     |
+	|  C  ||  0  |
+	|  P  ||  1  |
+	|  U  ||     |
 	 ¯¯¯¯¯  ¯¯¯¯¯ 
 	Written by FACTS Engineering
-	Copyright (c) 2019 FACTS Engineering, LLC
+	Copyright (c) 2023 FACTS Engineering, LLC
 	Licensed under the MIT license.
  */
 

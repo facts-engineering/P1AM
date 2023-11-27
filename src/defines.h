@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2019 FACTS Engineering, LLC
+Copyright (c) 2023 FACTS Engineering, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,6 @@ SOFTWARE.
 #ifndef defines_h
 #define defines_h
 
-#ifndef NUMBER_OF_MODULES
-	#define NUMBER_OF_MODULES	15 //Current max 15 Modules
-#endif
-
 #define DEBUG_PRINT_ON		//Comment this out to stop debug messages from being printed to the Serial console. This only will affect messages from this library.
 
 #ifdef DEBUG_PRINT_ON
@@ -38,10 +34,24 @@ SOFTWARE.
 	#define debugPrint(a) //nothing, disables printing from this function
 #endif
 
-#define slaveSelectPin 		A3
-#define slaveAckPin 		A4
-#define SWITCH_BUILTIN		31
-#define baseEnable			33
+
+#ifdef _VARIANT_P1AM_200
+	#define NUMBER_OF_MODULES	8 
+	#define slaveSelectPin 		44
+	#define slaveAckPin 		47
+	#define SWITCH_BUILTIN		31
+	#define baseEnable			46
+	#define _P1AM_SPI 	SPI2
+#else
+	#define NUMBER_OF_MODULES	15 
+	#define slaveSelectPin 		A3
+	#define slaveAckPin 		A4
+	#define SWITCH_BUILTIN		31
+	#define baseEnable			33
+	#define _P1AM_SPI 	SPI
+#endif
+
+
 
 #define MOD_HDR 			0x02
 #define VERSION_HDR 		0x03

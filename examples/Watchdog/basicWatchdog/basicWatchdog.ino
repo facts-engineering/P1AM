@@ -1,12 +1,12 @@
 /*  
     basicWatchdog Example
     The watchdog timer is a safety feature that will stop code from
-    executing if the P1AM-100 is not operating properly. It is used to detect
+    executing if the P1AM-CPU is not operating properly. It is used to detect
     and recover from potential hardware faults or programming mistakes.
     
     This example shows how to initialize and then use the watchdog. 
     There are 2 modes for the watchdog: Toggle and Hold. 
-    - Toggle will reset the P1AM-100 CPU and then start code at the beginning.
+    - Toggle will reset the P1AM-CPU and then start code at the beginning.
     - Hold will hold the arduino in reset and shut off all modules. 
     
     This example requires any P1000 series module.
@@ -16,12 +16,12 @@
 	|  A  ||  O  |
 	|  M  ||  T  |
 	|  -  ||     |
-	|  1  ||  0  |
-	|  0  ||  1  |
-	|  0  ||     |
+	|  C  ||  0  |
+	|  P  ||  1  |
+	|  U  ||     |
 	 ¯¯¯¯¯  ¯¯¯¯¯ 
 	Written by FACTS Engineering
-	Copyright (c) 2019 FACTS Engineering, LLC
+	Copyright (c) 2023 FACTS Engineering, LLC
 	Licensed under the MIT license.
  */
 

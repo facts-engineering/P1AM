@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 FACTS Engineering, LLC
+Copyright (c) 2023 FACTS Engineering, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -198,7 +198,6 @@ Example Code:
 void P1_HSC_Channel::setPosition(int counts){
 	uint8_t  registerOffset = 0;
 	uint32_t bitPosition = 0;
-	uint32_t checkCommand = 0;
 	
 	if(channelNumber == 1){
 		registerOffset = 5;

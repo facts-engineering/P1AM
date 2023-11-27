@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 FACTS Engineering, LLC
+Copyright (c) 2023 FACTS Engineering, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,8 @@ const struct moduleProps
   //{0x000000ID,di,do,ai,ao,st,cf,ds}
     {0x00000000, 0, 0, 0, 0, 0, 0, 0, "Empty"}, //Empty first entry for defaults
 
+	{0x04A00042, 1, 0, 0, 0, 0, 0, 1, "P1-08ND-TTL"}, //P1-08ND-TTL
+
 	{0x04A00081, 1, 0, 0, 0, 0, 0, 1, "P1-08ND3"},	//P1-08ND3
 
 	{0x04A00085, 1, 0, 0, 0, 0, 0, 1, "P1-08NA"},	//P1-08NA
@@ -60,6 +62,8 @@ const struct moduleProps
 	{0x1404008F, 0, 1, 0, 0, 0, 0, 1, "P1-08TRS"},	//P1-08TRS
 
 	{0x14040091, 0, 2, 0, 0, 0, 0, 1, "P1-16TR"},	//P1-16TR
+
+	{0x14050046, 0, 1, 0, 0, 0, 0, 1, "P1-08TD-TTL"}, //P1-08TD-TTL
 
 	{0x14050081, 0, 1, 0, 0, 0, 0, 1, "P1-08TD1"},	//P1-08TD1
 

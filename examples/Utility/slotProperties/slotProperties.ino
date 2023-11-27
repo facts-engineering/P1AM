@@ -16,9 +16,9 @@
   |  A  ||  O  ||  O  |
   |  M  ||  T  ||  T  |
   |  -  ||     ||     |
-  |  1  ||  0  ||  0  |
-  |  0  ||  1  ||  2  |
-  |  0  ||     ||     | etc...
+  |  C  ||  0  ||  0  |
+  |  P  ||  1  ||  2  |
+  |  U  ||     ||     | etc...
    ¯¯¯¯¯  ¯¯¯¯¯  ¯¯¯¯¯
   Written by Brett Bowden and Adam Cummick
   Licensed under the MIT license.

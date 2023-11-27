@@ -34,9 +34,9 @@
   |  P1 | |   0   | |   0   | |   1   | |   0   | |   0   | |   0   | |   1   | |   0   |
   |  AM | |   8   | |   8   | |   6   | |   8   | |   8   | |   8   | |   6   | |   8   |  
   |  -  | |   T   | |   T   | |   T   | |   T   | |   N   | |   T   | |   N   | |   S   |  
-  |  1  | |   R   | |   R   | |   R   | |   R   | |   D   | |   R   | |   D   | |   I   |  
-  |  0  | |   S   | |   S   | |       | |   S   | |   3   | |   S   | |   3   | |   M   |  
-  |  0  | |DO - 0 | |DO - 1 | |DO - 2 | |DO - 4 | |DI - 0 | |DO - 5 | |DI - 1 | |DI - 3 | 
+  |  C  | |   R   | |   R   | |   R   | |   R   | |   D   | |   R   | |   D   | |   I   |  
+  |  P  | |   S   | |   S   | |       | |   S   | |   3   | |   S   | |   3   | |   M   |  
+  |  U  | |DO - 0 | |DO - 1 | |DO - 2 | |DO - 4 | |DI - 0 | |DO - 5 | |DI - 1 | |DI - 3 | 
    ¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯   ¯¯¯¯¯¯¯ 
                                     
   Each analog channel uses 4 bytes of data, regardless of the resolution of the module. For Voltage/Current analog
@@ -56,7 +56,7 @@
   
   This example works with all P1000 Series Discrete Output Modules, but can be adapted to any type of module.
   Written by FACTS Engineering
-  Copyright (c) 2019 FACTS Engineering, LLC
+  Copyright (c) 2023 FACTS Engineering, LLC
   Licensed under the MIT license.
 */
 #include <P1AM.h>

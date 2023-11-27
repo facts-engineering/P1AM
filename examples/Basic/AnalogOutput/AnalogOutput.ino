@@ -17,15 +17,15 @@
 	|  A  ||  O  |
 	|  M  ||  T  |
 	|  -  ||     |
-	|  1  ||  0  |
-	|  0  ||  1  |
-	|  0  ||     |
+	|  C  ||  0  |
+	|  P  ||  1  |
+	|  U  ||     |
 	 ¯¯¯¯¯  ¯¯¯¯¯ 
 
  To confirm the analog output value you can use either a P1 analog input module or a multimeter.
  
  Written by FACTS Engineering
- Copyright (c) 2019 FACTS Engineering, LLC
+ Copyright (c) 2023 FACTS Engineering, LLC
  Licensed under the MIT license.
 */
 

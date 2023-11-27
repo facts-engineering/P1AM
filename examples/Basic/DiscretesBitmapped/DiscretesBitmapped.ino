@@ -20,9 +20,9 @@
 	|  A  ||  O  ||  O  |
 	|  M  ||  T  ||  T  |
 	|  -  ||     ||     |
-	|  1  ||  0  ||  0  |
-	|  0  ||  1  ||  2  |
-	|  0  ||     ||     |
+	|  C  ||  0  ||  0  |
+	|  P  ||  1  ||  2  |
+	|  U  ||     ||     |
 	 ¯¯¯¯¯  ¯¯¯¯¯  ¯¯¯¯¯   
    
 	Note: This example uses hexadecimal formatted numbers, though any number format
@@ -52,7 +52,7 @@
 	readDiscrete function.
 
 	Written by FACTS Engineering
-	Copyright (c) 2019 FACTS Engineering, LLC
+	Copyright (c) 2023 FACTS Engineering, LLC
 	Licensed under the MIT license.
 */
 
