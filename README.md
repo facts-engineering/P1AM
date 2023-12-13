@@ -59,7 +59,8 @@ float temperature = P1.readTemperature(2, 3);  //Return temperature read from sl
 - Type **P1AM** into the search box and click the install button
 
 ### Installing the Board
-
+- Start the Arduino IDE and select File > Preferences
+- Enter `https://raw.githubusercontent.com/facts-engineering/facts-engineering.github.io/master/package_productivity-P1AM-boardmanagermodule_index.json` into the Additional Board Manager URLs field. You can add multiple URLs, separating them with commas.
 - Use Arduino's Boards Manager to install the board. `Tools > Board > Boards Manager`
 - Type **P1AM** into the search box and click the install button
 
