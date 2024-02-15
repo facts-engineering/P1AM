@@ -36,7 +36,7 @@ SOFTWARE.
 
 
 #ifdef _VARIANT_P1AM_200
-	#define NUMBER_OF_MODULES	8 
+	#define NUMBER_OF_MODULES	15 
 	#define slaveSelectPin 		44
 	#define slaveAckPin 		47
 	#define SWITCH_BUILTIN		31
